@@ -3,7 +3,7 @@ import React from "react";
 
 const Wrapper = () => {
   return (
-    <div className="grid grid-cols-12 bg-darkColor1 min-h-screen">
+    <div className="grid grid-cols-12 place-items-center bg-bgDesktopLight bg-cover min-h-screen dark:bg-bgDesktopDark">
       <Container />
     </div>
   );
