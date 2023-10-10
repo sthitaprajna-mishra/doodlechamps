@@ -9,9 +9,8 @@ import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 const LightDarkMode = ({ theme, setTheme }) => {
   useEffect(() => {
     if (
-      theme === "dark" ||
-      (theme !== "light" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
+      //   window.matchMedia("(prefers-color-scheme: dark)").matches ||
+      theme === "dark"
     ) {
       document.documentElement.classList.add("dark");
       setTheme("dark");
@@ -26,13 +25,13 @@ const LightDarkMode = ({ theme, setTheme }) => {
   return (
     <>
       <div className="absolute top-0 right-0 m-4 hover:cursor-pointer transition-all">
-        {theme === "dark" ? (
-          <DarkModeOutlinedIcon onClick={toggleTheme} />
-        ) : (
+        {theme === "light" ? (
           <WbSunnyOutlinedIcon
             style={{ color: "hsl(222, 40%, 13%)" }}
             onClick={toggleTheme}
           />
+        ) : (
+          <DarkModeOutlinedIcon onClick={toggleTheme} />
         )}
       </div>
     </>

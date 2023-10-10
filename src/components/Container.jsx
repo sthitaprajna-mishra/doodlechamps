@@ -7,20 +7,20 @@ import lightlogo from "../assets/logo_light.png";
 import LightDarkMode from "./LightDarkMode";
 
 const Container = () => {
-  const [theme, setTheme] = useState("neutral");
+  const [theme, setTheme] = useState("dark");
   return (
     <div className="col-span-12 mx-6 text-darkColor1 font-leagueSpartan md:mx-2 dark:text-lightColor1">
       {/* Light/Dark Mode */}
       <LightDarkMode theme={theme} setTheme={setTheme} />
       {/* Header */}
 
-      {theme === "dark" ? (
-        <div className="flex justify-center mx-auto bg-darkColor1 w-3/4 rounded-md">
-          <img className="h-64" src={darklogo} alt="dark logo" />
-        </div>
-      ) : (
+      {theme === "light" ? (
         <div className="flex justify-center mx-auto bg-lightColor1 w-3/4 rounded-md">
           <img className="h-64" src={lightlogo} alt="light logo" />
+        </div>
+      ) : (
+        <div className="flex justify-center mx-auto bg-darkColor1 w-3/4 rounded-md">
+          <img className="h-64" src={darklogo} alt="dark logo" />
         </div>
       )}
 
