@@ -35,12 +35,12 @@ const Container = () => {
       {/* Buttons */}
       <div className="text-lightColor1 mt-8 font-semibold flex flex-col items-center justify-center space-y-8 md:flex-row md:space-x-8 md:space-y-0">
         <div>
-          <button className="p-4 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer">
+          <button className="p-2 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer">
             Create Room
           </button>
         </div>
         <div>
-          <button className="p-4 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer">
+          <button className="p-2 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer">
             Join Room
           </button>
         </div>
