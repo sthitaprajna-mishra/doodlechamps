@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Canvas from "./components/Canvas";
 import Wrapper from "./components/Wrapper";
+
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3000", {
+  transports: ["websocket"],
+});
 
 function App() {
   return (
