@@ -6,13 +6,14 @@ import { DisplayContext } from "../context/DisplayContext";
 
 // components
 import LandingPage from "./LandingPage";
+import CreatePage from "./CreatePage";
 
 const DisplayController = () => {
   const { page } = useContext(DisplayContext);
 
   switch (page) {
     case "create":
-      return <div>Create Page</div>;
+      return <CreatePage />;
     case "gameplay":
       return <div>Gameplay Page</div>;
     default:

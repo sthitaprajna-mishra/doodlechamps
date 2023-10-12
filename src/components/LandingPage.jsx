@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 
 // context
 import { ThemeContext } from "../context/ThemeContext";
+import { DisplayContext } from "../context/DisplayContext";
 
 // assets
 import darklogo from "../assets/logo_dark_2.png";
@@ -10,6 +11,7 @@ import lightlogo from "../assets/logo_light.png";
 
 const LandingPage = () => {
   const { theme } = useContext(ThemeContext);
+  const { setPage } = useContext(DisplayContext);
 
   return (
     <>
@@ -34,7 +36,10 @@ const LandingPage = () => {
       {/* Buttons */}
       <div className="text-lightColor1 mt-8 font-semibold flex flex-col items-center justify-center space-y-8 md:flex-row md:space-x-8 md:space-y-0">
         <div>
-          <button className="p-2 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer">
+          <button
+            className="p-2 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer"
+            onClick={() => setPage("create")}
+          >
             Create Room
           </button>
         </div>
