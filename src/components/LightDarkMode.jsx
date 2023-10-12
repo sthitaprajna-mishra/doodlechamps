@@ -1,12 +1,16 @@
 // react
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
-// MUI
+// context
+import { ThemeContext } from "../context/ThemeContext";
+
 // MUI
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 
-const LightDarkMode = ({ theme, setTheme }) => {
+const LightDarkMode = () => {
+  const { theme, setTheme } = useContext(ThemeContext);
+
   useEffect(() => {
     if (
       //   window.matchMedia("(prefers-color-scheme: dark)").matches ||
