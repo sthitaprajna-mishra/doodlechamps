@@ -15,6 +15,7 @@ export default {
         darkColor1: "hsl(222, 40%, 13%)",
         darkColor2: "hsl(224, 40%, 20%)",
         lightColor1: "hsl(0, 0%, 100%)",
+        lightColor2: "hsl(222, 100%, 98%)",
         blueColor1: "hsl(212, 98%, 50%)",
         blueColor2: "hsl(212, 98%, 60%)",
       },
