@@ -38,58 +38,58 @@ const CreatePage = () => {
                 value="1"
                 control={
                   <Radio
-                    size="small"
+                    size="extrasmall"
                     sx={
                       theme === "dark"
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
                     }
                   />
                 }
-                label={<h1 className="text-lg mt-1 font-leagueSpartan">1</h1>}
+                label={<h1 className="text-md mt-1 font-leagueSpartan">1</h1>}
               />
               <FormControlLabel
                 value="3"
                 control={
                   <Radio
-                    size="small"
+                    size="extrasmall"
                     sx={
                       theme === "dark"
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
                     }
                   />
                 }
-                label={<h1 className="text-lg mt-1 font-leagueSpartan">3</h1>}
+                label={<h1 className="text-md mt-1 font-leagueSpartan">3</h1>}
               />
               <FormControlLabel
                 value="5"
                 control={
                   <Radio
-                    size="small"
+                    size="extrasmall"
                     sx={
                       theme === "dark"
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
                     }
                   />
                 }
-                label={<h1 className="text-lg mt-1 font-leagueSpartan">5</h1>}
+                label={<h1 className="text-md mt-1 font-leagueSpartan">5</h1>}
               />
             </RadioGroup>
           </Box>
@@ -109,51 +109,51 @@ const CreatePage = () => {
                 value="30"
                 control={
                   <Radio
-                    size="small"
+                    size="extrasmall"
                     sx={
                       theme === "dark"
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
                     }
                   />
                 }
-                label={<h1 className="text-lg mt-1 font-leagueSpartan">30s</h1>}
+                label={<h1 className="text-md mt-1 font-leagueSpartan">30s</h1>}
               />
               <FormControlLabel
                 value="60"
                 control={
                   <Radio
-                    size="small"
+                    size="extrasmall"
                     sx={
                       theme === "dark"
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
                     }
                   />
                 }
-                label={<h1 className="text-lg mt-1 font-leagueSpartan">60s</h1>}
+                label={<h1 className="text-md mt-1 font-leagueSpartan">60s</h1>}
               />
               <FormControlLabel
                 value="120"
                 control={
                   <Radio
-                    size="small"
+                    size="extrasmall"
                     sx={
                       theme === "dark"
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
@@ -161,7 +161,7 @@ const CreatePage = () => {
                   />
                 }
                 label={
-                  <h1 className="text-lg mt-1 font-leagueSpartan">120s</h1>
+                  <h1 className="text-md mt-1 font-leagueSpartan">120s</h1>
                 }
               />
             </RadioGroup>
@@ -188,7 +188,7 @@ const CreatePage = () => {
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
@@ -196,20 +196,20 @@ const CreatePage = () => {
                   />
                 }
                 label={
-                  <h1 className="text-lg mt-1 font-leagueSpartan">Easy</h1>
+                  <h1 className="text-md mt-1 font-leagueSpartan">Easy</h1>
                 }
               />
               <FormControlLabel
                 value="medium"
                 control={
                   <Radio
-                    size="small"
+                    size="extrasmall"
                     sx={
                       theme === "dark"
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
@@ -217,20 +217,20 @@ const CreatePage = () => {
                   />
                 }
                 label={
-                  <h1 className="text-lg mt-1 font-leagueSpartan">Medium</h1>
+                  <h1 className="text-md mt-1 font-leagueSpartan">Medium</h1>
                 }
               />
               <FormControlLabel
                 value="hard"
                 control={
                   <Radio
-                    size="small"
+                    size="extrasmall"
                     sx={
                       theme === "dark"
                         ? {
                             color: "#ffffff",
                             "&.Mui-checked": {
-                              color: "#ffffff",
+                              //   color: "#ffffff",
                             },
                           }
                         : {}
@@ -238,7 +238,7 @@ const CreatePage = () => {
                   />
                 }
                 label={
-                  <h1 className="text-lg mt-1 font-leagueSpartan">Hard</h1>
+                  <h1 className="text-md mt-1 font-leagueSpartan">Hard</h1>
                 }
               />
             </RadioGroup>
