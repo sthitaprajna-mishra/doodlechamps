@@ -5,30 +5,25 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import { DisplayContext } from "../context/DisplayContext";
 import { UserContext } from "../context/UserContext";
+import { useSocket } from "../context/SocketContext";
 
 // assets
 import darklogo from "../assets/logo_dark_2.png";
 import lightlogo from "../assets/logo_light.png";
-
-// sockets
-import io from "socket.io-client";
-import CreatePage from "./CreatePage";
-
-const socket = io.connect("http://localhost:3000", {
-  transports: ["websocket"],
-});
 
 const LandingPage = () => {
   const [createScreen, setCreateScreen] = useState(true);
   const [username, setUsername] = useState("");
   const [roomcodeinput, setRoomcodeinput] = useState("");
   const [usernameValidation, setUsernameValidation] = useState(); // by default empty, so username is not valid
+  const [roomcodeValidation, setRoomcodeValidation] = useState(); // by default empty, so roomcode is not valid
 
   const usernameElement = useRef(null);
 
   const { theme } = useContext(ThemeContext);
   const { setPage } = useContext(DisplayContext);
   const { userList, setUserList } = useContext(UserContext);
+  const socket = useSocket();
 
   const createRoom = () => {
     if (usernameValidation) {
@@ -38,9 +33,21 @@ const LandingPage = () => {
     }
   };
 
+  const joinRoom = () => {
+    if (roomcodeValidation) {
+      socket.emit("joinRoom", username, roomcodeinput);
+    } else {
+      setRoomcodeValidation(false);
+    }
+  };
+
   const handleEnterSubmit = (e) => {
     if (e.key === "Enter") {
-      createRoom();
+      if (createScreen) {
+        createRoom();
+      } else {
+        joinRoom();
+      }
     }
   };
 
@@ -51,6 +58,16 @@ const LandingPage = () => {
       setUsernameValidation(true);
     } else {
       setUsernameValidation(false);
+    }
+  };
+
+  const handleRoomcode = (e) => {
+    console.log(e);
+    setRoomcodeinput(e.target.value.trim());
+    if (e.target.value.trim() !== "") {
+      setRoomcodeValidation(true);
+    } else {
+      setRoomcodeValidation(false);
     }
   };
 
@@ -67,14 +84,25 @@ const LandingPage = () => {
         userData: { userId, userName },
       } = result;
 
-      const userObj = {
-        userId,
-        userName,
-        ownerRoom: [roomCode],
-        memberRoom: [roomCode],
-      };
+      // const userObj = {
+      //   userId,
+      //   userName,
+      //   ownerRoom: [roomCode],
+      //   memberRoom: [roomCode],
+      // };
 
-      setUserList([...userList, userObj]);
+      // setUserList([...userList, userObj]);
+
+      // return <CreatePage roomCode={roomCodeEmitted} />;
+      setPage(`create:${roomCode}`); // Change the page state
+    });
+
+    socket.on("roomJoined", (result) => {
+      const { roomCode, userList: resultUserList } = result;
+
+      console.log(resultUserList);
+
+      setUserList([...resultUserList]);
 
       // return <CreatePage roomCode={roomCodeEmitted} />;
       setPage(`create:${roomCode}`); // Change the page state
@@ -83,6 +111,7 @@ const LandingPage = () => {
     return () => {
       // Clean up the event listener when the component unmounts
       socket.off("roomCreated");
+      socket.off("roomJoined");
     };
   }, []);
 
@@ -160,20 +189,26 @@ const LandingPage = () => {
                       <label className="text-xl">Room Code</label>
                       <input
                         value={roomcodeinput}
-                        onChange={(e) =>
-                          e.target.value.trim() !== ""
-                            ? setRoomcodeinput(e.target.value)
-                            : null
-                        }
-                        className="bg-lightColor2 dark:bg-darkColor1 text-lg px-2 rounded focus:outline focus:outline-blueColor1 py-2"
+                        onKeyDown={(e) => handleEnterSubmit(e)}
+                        onChange={(e) => handleRoomcode(e)}
+                        className={`bg-lightColor2 dark:bg-darkColor1 text-lg px-2 rounded ${
+                          roomcodeValidation === false
+                            ? "outline outline-red-500 focus:outline focus:outline-red-500"
+                            : ""
+                        } focus:outline focus:outline-blueColor1 py-2`}
                         type="text"
                       />
+                      {roomcodeValidation === false ? (
+                        <div className="text-red-500">
+                          Room Code is mandatory
+                        </div>
+                      ) : null}
                     </>
                   ) : null}
                 </div>
                 <div className="mx-auto">
                   <button
-                    onClick={createScreen ? createRoom : null}
+                    onClick={createScreen ? createRoom : joinRoom}
                     className="p-2 w-[10rem] bg-blueColor1 text-lightColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer"
                   >
                     {createScreen ? "Create" : "Join"}

@@ -12,6 +12,8 @@ const DisplayController = () => {
   let { page } = useContext(DisplayContext);
   let roomCode = "";
 
+  console.log(page);
+
   if (page.length > 6 && page.substring(0, 6) === "create") {
     roomCode = page.split(":")[1];
     page = page.split(":")[0];
