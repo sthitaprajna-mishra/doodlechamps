@@ -1,5 +1,5 @@
 // react
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 // context
 import { ThemeContext } from "../context/ThemeContext";
@@ -9,9 +9,35 @@ import { DisplayContext } from "../context/DisplayContext";
 import darklogo from "../assets/logo_dark_2.png";
 import lightlogo from "../assets/logo_light.png";
 
+// sockets
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3000", {
+  transports: ["websocket"],
+});
+
 const LandingPage = () => {
+  const [createdRoomCode, setCreatedRoomCode] = useState(null);
+
   const { theme } = useContext(ThemeContext);
   const { setPage } = useContext(DisplayContext);
+
+  const createRoom = () => {
+    socket.emit("createRoom");
+  };
+
+  useEffect(() => {
+    // Listen for the 'roomCreated' event
+    socket.on("roomCreated", (roomCode) => {
+      setCreatedRoomCode(roomCode);
+      setPage(`create:${roomCode}`); // Change the page state
+    });
+
+    return () => {
+      // Clean up the event listener when the component unmounts
+      socket.off("roomCreated");
+    };
+  }, []);
 
   return (
     <>
@@ -38,7 +64,7 @@ const LandingPage = () => {
         <div>
           <button
             className="p-2 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer"
-            onClick={() => setPage("create")}
+            onClick={createRoom}
           >
             Create Room
           </button>

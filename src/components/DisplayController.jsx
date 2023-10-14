@@ -9,11 +9,17 @@ import LandingPage from "./LandingPage";
 import CreatePage from "./CreatePage";
 
 const DisplayController = () => {
-  const { page } = useContext(DisplayContext);
+  let { page } = useContext(DisplayContext);
+  let roomCode = "";
+
+  if (page.length > 6 && page.substring(0, 6) === "create") {
+    roomCode = page.split(":")[1];
+    page = page.split(":")[0];
+  }
 
   switch (page) {
     case "create":
-      return <CreatePage />;
+      return <CreatePage roomCode={roomCode} />;
     case "gameplay":
       return <div>Gameplay Page</div>;
     default:
