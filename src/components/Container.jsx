@@ -7,7 +7,7 @@ import DisplayController from "./DisplayController";
 
 const Container = () => {
   return (
-    <div className="col-span-12 mx-6 text-darkColor1 font-leagueSpartan md:mx-2 dark:text-lightColor1">
+    <div className="col-span-12 my-4 mx-6 text-darkColor1 font-leagueSpartan md:mx-2 md:my-0 dark:text-lightColor1">
       {/* Light/Dark Mode */}
       <LightDarkMode />
 

@@ -1,5 +1,5 @@
 // react
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 
 // context
 import { ThemeContext } from "../context/ThemeContext";
@@ -11,13 +11,18 @@ import lightlogo from "../assets/logo_light.png";
 
 // sockets
 import io from "socket.io-client";
+import CreatePage from "./CreatePage";
 
 const socket = io.connect("http://localhost:3000", {
   transports: ["websocket"],
 });
 
 const LandingPage = () => {
-  const [createdRoomCode, setCreatedRoomCode] = useState(null);
+  const [createScreen, setCreateScreen] = useState(true);
+  const [username, setUsername] = useState("");
+  const [roomcodeinput, setRoomcodeinput] = useState("");
+
+  const usernameElement = useRef(null);
 
   const { theme } = useContext(ThemeContext);
   const { setPage } = useContext(DisplayContext);
@@ -27,10 +32,15 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
+    // focus on username input
+    usernameElement.current.focus();
+  }, [createScreen]);
+
+  useEffect(() => {
     // Listen for the 'roomCreated' event
-    socket.on("roomCreated", (roomCode) => {
-      setCreatedRoomCode(roomCode);
-      setPage(`create:${roomCode}`); // Change the page state
+    socket.on("roomCreated", (roomCodeEmitted) => {
+      // return <CreatePage roomCode={roomCodeEmitted} />;
+      setPage(`create:${roomCodeEmitted}`); // Change the page state
     });
 
     return () => {
@@ -39,40 +49,98 @@ const LandingPage = () => {
     };
   }, []);
 
+  const toggleScreen = () => {
+    setCreateScreen(!createScreen);
+  };
+
   return (
     <>
       {/* Header */}
       {theme === "light" ? (
-        <div className="flex justify-center mx-auto bg-lightColor1 w-3/4 rounded-md">
-          <img className="h-64" src={lightlogo} alt="light logo" />
+        <div className="flex justify-center mx-auto bg-lightColor1 pb-1 rounded-md">
+          <img className="h-24 md:h-32" src={lightlogo} alt="light logo" />
         </div>
       ) : (
-        <div className="flex justify-center mx-auto bg-darkColor1 w-3/4 rounded-md">
-          <img className="h-64" src={darklogo} alt="dark logo" />
+        <div className="flex justify-center mx-auto bg-darkColor1 rounded-md">
+          <img className="h-24 md:h-32" src={darklogo} alt="dark logo" />
         </div>
       )}
-      {/* Hero */}
-      <div className="flex items-center justify-center mt-8">
-        <div className="bg-lightColor1 text-center text-2xl p-4 rounded-md md:w-1/2 dark:bg-darkColor2">
-          Unleash your creativity in this free online multiplayer drawing and
-          guessing game, where champions are born one{" "}
-          <span className="text-blueColor1 font-bold">doodle</span> at a time!
+
+      <div className="flex flex-col mt-8 min-h-[16rem] md:flex-row border-1">
+        <div className="text-center flex items-center text-2xl md:text-4xl md:w-1/2">
+          <div className="py-8 md:py-0 md:p-16">
+            Unleash your creativity in this free online multiplayer drawing and
+            guessing game, where champions are born one{" "}
+            <span className="text-blueColor1 font-bold">doodle</span> at a time!
+          </div>
         </div>
-      </div>
-      {/* Buttons */}
-      <div className="text-lightColor1 mt-8 font-semibold flex flex-col items-center justify-center space-y-8 md:flex-row md:space-x-8 md:space-y-0">
-        <div>
-          <button
-            className="p-2 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer"
-            onClick={createRoom}
-          >
-            Create Room
-          </button>
-        </div>
-        <div>
-          <button className="p-2 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer">
-            Join Room
-          </button>
+        <div className="flex space-x-4 md:pr-16 md:w-1/2 border-1">
+          <div className="w-full pb-2 bg-lightColor1 dark:bg-darkColor2">
+            <div className="flex mb-2 border-1">
+              <div
+                onClick={toggleScreen}
+                className={`w-1/2 py-4 text-center ${
+                  createScreen
+                    ? "text-blueColor1"
+                    : "bg-lightColor2 dark:bg-darkColor1"
+                } text-xl font-semibold border-r border-lightColor2 dark:border-darkColor1 hover:transition-all hover:cursor-pointer`}
+              >
+                Create Room
+              </div>
+              <div
+                onClick={toggleScreen}
+                className={`w-1/2 py-4 text-center ${
+                  !createScreen
+                    ? "text-blueColor1"
+                    : "bg-lightColor2 dark:bg-darkColor1"
+                } text-xl font-semibold   hover:transition-all hover:cursor-pointer`}
+              >
+                Join Room
+              </div>
+            </div>
+            {/* Screen */}
+            <div className="flex items-center justify-center border-1">
+              <div className="flex flex-col border-1 justify-center space-y-6 w-3/4 h-full">
+                <div className="flex flex-col mt-2 space-y-2">
+                  <label className="text-xl">Username</label>
+                  <input
+                    ref={usernameElement}
+                    value={username}
+                    onChange={(e) =>
+                      e.target.value.trim() !== ""
+                        ? setUsername(e.target.value)
+                        : null
+                    }
+                    className="bg-lightColor2 dark:bg-darkColor1 text-lg px-2 rounded focus:outline focus:outline-blueColor1 py-2"
+                    type="text"
+                  />
+                  {!createScreen ? (
+                    <>
+                      <label className="text-xl">Room Code</label>
+                      <input
+                        value={roomcodeinput}
+                        onChange={(e) =>
+                          e.target.value.trim() !== ""
+                            ? setRoomcodeinput(e.target.value)
+                            : null
+                        }
+                        className="bg-lightColor2 dark:bg-darkColor1 text-lg px-2 rounded focus:outline focus:outline-blueColor1 py-2"
+                        type="text"
+                      />
+                    </>
+                  ) : null}
+                </div>
+                <div className="mx-auto">
+                  <button
+                    onClick={createScreen ? createRoom : null}
+                    className="p-2 w-[10rem] bg-blueColor1 text-lightColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer"
+                  >
+                    {createScreen ? "Create" : "Join"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

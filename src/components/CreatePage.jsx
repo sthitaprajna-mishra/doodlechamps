@@ -36,12 +36,14 @@ const CreatePage = ({ roomCode }) => {
   };
 
   return (
-    <div className="w-screen min-h-[24rem] border-1 px-4 border-red-500 grid grid-cols-12 md:space-x-6">
-      <div className="bg-lightColor1 col-span-12 pt-4 flex justify-center rounded-md md:col-span-4 dark:bg-darkColor2">
+    <div className="w-screen min-h-[30rem] border-1 px-4 border-red-500 grid grid-cols-12 md:space-x-3">
+      {/* Left Side - Player List */}
+      <div className="bg-lightColor1 col-span-12 pt-4 flex justify-center rounded-md md:col-span-2 dark:bg-darkColor2">
         <div className="bg-lightColor2 h-fit w-full mx-4 py-2 text-center dark:bg-darkColor1">
           <h1 className="text-4xl">Players</h1>
         </div>
       </div>
+      {/* Middle - Settings/Canvas  */}
       <div className="border-1 col-span-12 pt-4 grid px-6 bg-lightColor1 rounded-md md:col-span-8 dark:bg-darkColor2">
         <Box className="flex items-center mb-8 space-x-4">
           <Box className="flex space-x-8 h-fit w-fit py-2 px-4  rounded-md bg-lightColor2 dark:bg-darkColor1">
@@ -304,6 +306,12 @@ const CreatePage = ({ roomCode }) => {
             </button>
           </Box>
         </FormControl>
+      </div>
+      {/* RIght Side - Chatbox */}
+      <div className="bg-lightColor1 col-span-12 pt-4 flex justify-center rounded-md md:col-span-2 dark:bg-darkColor2">
+        <div className="bg-lightColor2 h-fit w-full mx-4 py-2 text-center dark:bg-darkColor1">
+          <h1 className="text-4xl">Players</h1>
+        </div>
       </div>
     </div>
   );
