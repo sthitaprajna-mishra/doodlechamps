@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 // context
 import { ThemeContext } from "../context/ThemeContext";
 import { DisplayContext } from "../context/DisplayContext";
+import { UserContext } from "../context/UserContext";
 
 // assets
 import darklogo from "../assets/logo_dark_2.png";
@@ -26,9 +27,10 @@ const LandingPage = () => {
 
   const { theme } = useContext(ThemeContext);
   const { setPage } = useContext(DisplayContext);
+  const { userList, setUserList } = useContext(UserContext);
 
   const createRoom = () => {
-    socket.emit("createRoom");
+    socket.emit("createRoom", username);
   };
 
   useEffect(() => {
@@ -38,9 +40,23 @@ const LandingPage = () => {
 
   useEffect(() => {
     // Listen for the 'roomCreated' event
-    socket.on("roomCreated", (roomCodeEmitted) => {
+    socket.on("roomCreated", (result) => {
+      const {
+        roomCode,
+        userData: { userId, userName },
+      } = result;
+
+      const userObj = {
+        userId,
+        userName,
+        ownerRoom: [roomCode],
+        memberRoom: [roomCode],
+      };
+
+      setUserList([...userList, userObj]);
+
       // return <CreatePage roomCode={roomCodeEmitted} />;
-      setPage(`create:${roomCodeEmitted}`); // Change the page state
+      setPage(`create:${roomCode}`); // Change the page state
     });
 
     return () => {
