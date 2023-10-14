@@ -38,10 +38,16 @@ const LandingPage = () => {
     }
   };
 
-  const handleUserName = (value) => {
-    console.log(value);
-    setUsername(value.trim());
-    if (value.trim() !== "") {
+  const handleEnterSubmit = (e) => {
+    if (e.key === "Enter") {
+      createRoom();
+    }
+  };
+
+  const handleUserName = (e) => {
+    console.log(e);
+    setUsername(e.target.value.trim());
+    if (e.target.value.trim() !== "") {
       setUsernameValidation(true);
     } else {
       setUsernameValidation(false);
@@ -137,7 +143,8 @@ const LandingPage = () => {
                   <input
                     ref={usernameElement}
                     value={username}
-                    onChange={(e) => handleUserName(e.target.value)}
+                    onKeyDown={(e) => handleEnterSubmit(e)}
+                    onChange={(e) => handleUserName(e)}
                     className={`bg-lightColor2 dark:bg-darkColor1 text-lg px-2 rounded ${
                       usernameValidation === false
                         ? "outline outline-red-500 focus:outline focus:outline-red-500"

@@ -40,18 +40,13 @@ const CreatePage = ({ roomCode }) => {
   ];
 
   useEffect(() => {
-    console.log(userList);
-    console.log(
-      userList.filter((userObj) => userObj.memberRoom.includes(roomCode))
-    );
+    // console.log(userList);
+    // console.log(
+    //   userList.filter((userObj) => userObj.memberRoom.includes(roomCode))
+    // );
 
     if (userList.length > 0) {
-      console.log(usersInRoom);
-
-      // setUsersInRoom((prev) => [
-      //   ...prev,
-      //   ...userList.filter((userObj) => userObj.memberRoom.includes(roomCode)),
-      // ]);
+      // console.log(usersInRoom);
 
       setUsersInRoom((prev) => {
         const updatedUsers = [...prev]; // Create a copy of the previous state
@@ -75,7 +70,7 @@ const CreatePage = ({ roomCode }) => {
       );
     }
 
-    console.log(usersInRoom);
+    // console.log(usersInRoom);
   }, [userList]);
 
   const handleCopyToClipboard = () => {
@@ -113,8 +108,11 @@ const CreatePage = ({ roomCode }) => {
                 // console.log(usersInRoom);
                 // console.log(userInRoom);
                 return (
-                  <div className="bg-lightColor2 dark:bg-darkColor1 mb-2 py-1 pl-2">
-                    <h2 key={userInRoom.userId}>{userInRoom.userName}</h2>
+                  <div
+                    key={userInRoom.userId}
+                    className="bg-lightColor2 dark:bg-darkColor1 mb-2 py-1 pl-2"
+                  >
+                    <h2>{userInRoom.userName}</h2>
                   </div>
                 );
               })
