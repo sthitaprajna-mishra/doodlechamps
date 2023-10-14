@@ -22,6 +22,7 @@ const LandingPage = () => {
   const [createScreen, setCreateScreen] = useState(true);
   const [username, setUsername] = useState("");
   const [roomcodeinput, setRoomcodeinput] = useState("");
+  const [usernameValidation, setUsernameValidation] = useState(); // by default empty, so username is not valid
 
   const usernameElement = useRef(null);
 
@@ -30,7 +31,21 @@ const LandingPage = () => {
   const { userList, setUserList } = useContext(UserContext);
 
   const createRoom = () => {
-    socket.emit("createRoom", username);
+    if (usernameValidation) {
+      socket.emit("createRoom", username);
+    } else {
+      setUsernameValidation(false);
+    }
+  };
+
+  const handleUserName = (value) => {
+    console.log(value);
+    setUsername(value.trim());
+    if (value.trim() !== "") {
+      setUsernameValidation(true);
+    } else {
+      setUsernameValidation(false);
+    }
   };
 
   useEffect(() => {
@@ -122,14 +137,17 @@ const LandingPage = () => {
                   <input
                     ref={usernameElement}
                     value={username}
-                    onChange={(e) =>
-                      e.target.value.trim() !== ""
-                        ? setUsername(e.target.value)
-                        : null
-                    }
-                    className="bg-lightColor2 dark:bg-darkColor1 text-lg px-2 rounded focus:outline focus:outline-blueColor1 py-2"
+                    onChange={(e) => handleUserName(e.target.value)}
+                    className={`bg-lightColor2 dark:bg-darkColor1 text-lg px-2 rounded ${
+                      usernameValidation === false
+                        ? "outline outline-red-500 focus:outline focus:outline-red-500"
+                        : ""
+                    } focus:outline focus:outline-blueColor1 py-2`}
                     type="text"
                   />
+                  {usernameValidation === false ? (
+                    <div className="text-red-500">Username is mandatory</div>
+                  ) : null}
                   {!createScreen ? (
                     <>
                       <label className="text-xl">Room Code</label>
