@@ -17,24 +17,35 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
   const [currentJoineeName, setCurrentJoineeName] = useState("");
 
   const handleTextMessage = (e) => {
-    if (e.target.value.trim() !== "") {
-      setTextMessage(e.target.value.trim());
-      // console.log(e.target.value.trim());
-    }
+    setTextMessage(e.target.value);
   };
 
   const handleEnterSubmit = (e) => {
-    if (e.key === "Enter" && textMessage !== "") {
+    if (e.key === "Enter") {
       // console.log(currentJoineeName);
+      if (textMessage.trim() !== "") {
+        socket.emit(
+          "getMessage",
+          currentJoineeName,
+          roomCode,
+          textMessage.trim()
+        );
+      }
       setTextMessage("");
-      socket.emit("getMessage", currentJoineeName, roomCode, textMessage);
     }
   };
 
   const handleClickSubmit = () => {
     // console.log(currentJoineeName);
+    if (textMessage.trim() !== "") {
+      socket.emit(
+        "getMessage",
+        currentJoineeName,
+        roomCode,
+        textMessage.trim()
+      );
+    }
     setTextMessage("");
-    socket.emit("getMessage", currentJoineeName, roomCode, textMessage);
   };
 
   const socket = useSocket();
