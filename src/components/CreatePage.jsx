@@ -78,23 +78,25 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
       }
     });
 
-    socket.on("roomLeft", (userId, userName) => {
-      setNotifs((prevNotifs) => [
-        ...prevNotifs,
-        {
-          notifId:
-            prevNotifs.length > 0
-              ? prevNotifs[prevNotifs.length - 1].notifId + 1
-              : 1,
-          notifType: "left",
-          notifData: `${userName} has left the room`,
-        },
-      ]);
+    socket.on("roomLeft", (userId, userName, leftRoomCode) => {
+      if (roomCode === leftRoomCode) {
+        setNotifs((prevNotifs) => [
+          ...prevNotifs,
+          {
+            notifId:
+              prevNotifs.length > 0
+                ? prevNotifs[prevNotifs.length - 1].notifId + 1
+                : 1,
+            notifType: "left",
+            notifData: `${userName} has left the room`,
+          },
+        ]);
 
-      setDisplayUsers((prev) => {
-        console.log(prev);
-        return prev.filter((u) => u.userId !== userId);
-      });
+        setDisplayUsers((prev) => {
+          console.log(prev);
+          return prev.filter((u) => u.userId !== userId);
+        });
+      }
     });
 
     socket.on("sendMessage", (result) => {
