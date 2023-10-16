@@ -24,8 +24,24 @@ const CreatePage = ({ roomCode, ownerName }) => {
 
   useEffect(() => {
     socket.on("roomJoined", (result) => {
-      const { roomCode, userList: resultUserList } = result;
-      setUserList([...resultUserList]);
+      const {
+        roomCode: joinedRoomCode,
+        userList: resultUserList,
+        joineeName,
+      } = result;
+      if (joinedRoomCode === roomCode) {
+        setUserList([...resultUserList]);
+        setNotifs((prevNotifs) => [
+          ...prevNotifs,
+          {
+            notifId:
+              prevNotifs.length > 0
+                ? prevNotifs[prevNotifs.length - 1].notifId + 1
+                : 1,
+            notifData: `${joineeName} has joined the room`,
+          },
+        ]);
+      }
     });
 
     socket.on("roomLeft", (userId, userName) => {
