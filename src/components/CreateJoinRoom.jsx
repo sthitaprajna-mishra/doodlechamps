@@ -90,14 +90,14 @@ const CreateJoinRoom = () => {
     });
 
     socket.on("roomJoined", (result) => {
-      const { roomCode, userList: resultUserList } = result;
+      const { roomCode, userList: resultUserList, joineeName } = result;
 
       console.log(resultUserList);
 
       setUserList([...resultUserList]);
 
       // return <CreatePage roomCode={roomCodeEmitted} />;
-      setPage(`create:${roomCode}`); // Change the page state
+      setPage(`create:${roomCode}:${joineeName}:joinee`); // Change the page state
     });
 
     return () => {

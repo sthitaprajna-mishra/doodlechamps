@@ -12,18 +12,29 @@ const DisplayController = () => {
   let { page } = useContext(DisplayContext);
   let roomCode = "";
   let ownerName = "";
+  let joineeName = "";
 
   console.log(page);
 
   if (page.length > 6 && page.substring(0, 6) === "create") {
-    ownerName = page.split(":")[2];
+    if (page.split(":").length == 4) {
+      joineeName = page.split(":")[2];
+    } else {
+      ownerName = page.split(":")[2];
+    }
     roomCode = page.split(":")[1];
     page = page.split(":")[0];
   }
 
   switch (page) {
     case "create":
-      return <CreatePage roomCode={roomCode} ownerName={ownerName} />;
+      return (
+        <CreatePage
+          roomCode={roomCode}
+          ownerName={ownerName}
+          joineeName={joineeName}
+        />
+      );
     case "gameplay":
       return <div>Gameplay Page</div>;
     default:
