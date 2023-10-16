@@ -94,7 +94,7 @@ const LandingPage = () => {
       // setUserList([...userList, userObj]);
 
       // return <CreatePage roomCode={roomCodeEmitted} />;
-      setPage(`create:${roomCode}`); // Change the page state
+      setPage(`create:${roomCode}:${userName}`); // Change the page state
     });
 
     socket.on("roomJoined", (result) => {

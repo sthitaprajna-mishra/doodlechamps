@@ -8,7 +8,7 @@ import { useSocket } from "../context/SocketContext";
 // components
 import ConfigurationSection from "./ConfigurationSection";
 
-const CreatePage = ({ roomCode }) => {
+const CreatePage = ({ roomCode, ownerName }) => {
   const { userList, setUserList } = useContext(UserContext);
   const [displayUsers, setDisplayUsers] = useState([]);
 
@@ -29,9 +29,14 @@ const CreatePage = ({ roomCode }) => {
       setUserList([...resultUserList]);
     });
 
+    socket.on("roomLeft", (userId) => {
+      setDisplayUsers((prev) => prev.filter((u) => u.userId !== userId));
+    });
+
     return () => {
       // Clean up the event listener when the component unmounts
       socket.off("roomJoined");
+      socket.off("roomLeft");
     };
   }, []);
 
@@ -63,21 +68,25 @@ const CreatePage = ({ roomCode }) => {
               </div>
             );
           })} */}
-          {displayUsers && displayUsers.length > 0
-            ? displayUsers.map((userInRoom) => {
-                // console.log("inside map");
-                // console.log(usersInRoom);
-                // console.log(userInRoom);
-                return (
-                  <div
-                    key={userInRoom.userId}
-                    className="bg-lightColor2 dark:bg-darkColor1 mb-2 py-1 pl-2"
-                  >
-                    <h2>{userInRoom.userName}</h2>
-                  </div>
-                );
-              })
-            : null}
+          {displayUsers && displayUsers.length > 0 ? (
+            displayUsers.map((userInRoom) => {
+              // console.log("inside map");
+              // console.log(usersInRoom);
+              // console.log(userInRoom);
+              return (
+                <div
+                  key={userInRoom.userId}
+                  className="bg-lightColor2 dark:bg-darkColor1 mb-2 py-1 pl-2"
+                >
+                  <h2>{userInRoom.userName}</h2>
+                </div>
+              );
+            })
+          ) : (
+            <div className="bg-lightColor2 dark:bg-darkColor1 mb-2 py-1 pl-2">
+              <h2>{ownerName}</h2>
+            </div>
+          )}
         </div>
       </div>
       {/* Middle - Settings/Canvas  */}
