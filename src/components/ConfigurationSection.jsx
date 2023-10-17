@@ -17,7 +17,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Box } from "@mui/material";
 
-const ConfigurationSection = ({ roomCode }) => {
+const ConfigurationSection = ({ roomCode, setSwitchToCanvas }) => {
   const { theme } = useContext(ThemeContext);
   const [copied, setCopied] = useState(false);
 
@@ -286,7 +286,7 @@ const ConfigurationSection = ({ roomCode }) => {
         <Box className="text-lightColor1  font-semibold mx-auto mb-4">
           <button
             className="p-2 w-[10rem] bg-blueColor1 rounded-full transition-all text-lg hover:bg-blueColor2 hover:cursor-pointer"
-            // onClick={() => setPage("create")}
+            onClick={() => setSwitchToCanvas(true)}
           >
             Start
           </button>

@@ -1,12 +1,22 @@
 // react
 import React, { useState, useContext, useEffect } from "react";
 
+// clipboard
+import clipboard from "clipboard-copy";
+
 // context
 import { UserContext } from "../context/UserContext";
 import { useSocket } from "../context/SocketContext";
+import { ThemeContext } from "../context/ThemeContext";
+
+// mui
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import SendIcon from "@mui/icons-material/Send";
+import { Box } from "@mui/material";
 
 // components
 import ConfigurationSection from "./ConfigurationSection";
+import Canvas from "./Canvas";
 
 const CreatePage = ({ roomCode, ownerName, joineeName }) => {
   const { userList, setUserList } = useContext(UserContext);
@@ -15,6 +25,24 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
   const [textMessage, setTextMessage] = useState("");
   const [finalOwner, setFinalOwner] = useState("");
   const [currentJoineeName, setCurrentJoineeName] = useState("");
+  const [switchToCanvas, setSwitchToCanvas] = useState(false);
+
+  const { theme } = useContext(ThemeContext);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyToClipboard = () => {
+    clipboard(roomCode)
+      .then(() => {
+        setCopied(true);
+
+        setTimeout(() => {
+          setCopied(false);
+        }, 5000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  };
 
   const handleTextMessage = (e) => {
     setTextMessage(e.target.value);
@@ -156,10 +184,22 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
   return (
     <div className="w-screen min-h-[30rem] border-1 px-4 border-red-500 grid grid-cols-12 md:space-x-3">
       {/* Left Side - Player List */}
-      <div className="bg-lightColor1 col-span-12 pt-4 flex flex-col items-center rounded-md md:col-span-2 dark:bg-darkColor2">
+      <div className="bg-lightColor1 col-span-12 pt-4 flex flex-col items-center rounded-md md:col-span-4 dark:bg-darkColor2">
         <div className="bg-lightColor2 h-fit w-full mx-4 py-2 text-center dark:bg-darkColor1">
-          <h1 className="text-4xl">Players</h1>
+          <h1 className="text-4xl">Users</h1>
         </div>
+        <Box className="flex space-x-8 h-fit w-fit py-2 px-4 mt-8  rounded-md bg-lightColor2 dark:bg-darkColor1">
+          <div>Room Code </div>
+          <div className="flex space-x-2">
+            <div className="text-blueColor1">{roomCode}</div>
+            <div
+              className="hover:cursor-pointer"
+              onClick={handleCopyToClipboard}
+            >
+              <ContentCopyIcon fontSize="small" />
+            </div>
+          </div>
+        </Box>
         <div className="mt-8 w-full">
           {/* {sampleList.map((user) => {
             return (
@@ -189,10 +229,18 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
           )}
         </div>
       </div>
-      {/* Middle - Settings/Canvas  */}
-      <ConfigurationSection roomCode={roomCode} />
+      {/* Middle - Settings/Canvas 
+      {switchToCanvas ? (
+        <Canvas />
+      ) : (
+        <ConfigurationSection
+          roomCode={roomCode}
+          setSwitchToCanvas={setSwitchToCanvas}
+        />
+      )} */}
+
       {/* Right Side - Chatbox */}
-      <div className="bg-lightColor1 col-span-12 pt-4 pb-2 flex flex-col rounded-md md:col-span-2 dark:bg-darkColor2">
+      <div className="bg-lightColor1 col-span-12 pt-4 pb-2 flex flex-col rounded-md md:col-span-8 dark:bg-darkColor2">
         <div className="border-1 flex-1">
           {notifs.map((notif) => {
             switch (notif.notifType) {
@@ -201,14 +249,14 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
                 return (
                   <div
                     key={notif.notifId}
-                    className="text-blueColor1 mb-2 py-1 pl-2"
+                    className="text-blueColor1 mb-2 py-1 px-4"
                   >
                     <h2>{notif.notifData}</h2>
                   </div>
                 );
               case "message":
                 return (
-                  <div key={notif.notifId} className="mb-2 py-1 pl-2">
+                  <div key={notif.notifId} className="mb-2 py-1 px-4">
                     <h2>
                       <span className="text-blueColor1">
                         {notif.notifData.senderName}:
@@ -224,29 +272,29 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
             return (
               <div
                 key={notif.notifId}
-                className="text-blueColor1 mb-2 py-1 pl-2"
+                className="text-blueColor1 mb-2 py-1 px-4"
               >
                 <h2>{notif.notifData}</h2>
               </div>
             );
           })}
         </div>
-        <div className="flex justify-between px-1">
-          <div className="w-5/6 border-1 border-red-600">
+        <div className="flex space-x-4 px-4">
+          <div className="w-full border-1 border-red-600">
             <input
               value={textMessage}
               onKeyDown={(e) => handleEnterSubmit(e)}
               onChange={(e) => handleTextMessage(e)}
               placeholder="Enter your guess here"
-              className="bg-lightColor2 rounded w-full outline-none outline-offset-0 focus:outline-1 focus:outline-blueColor1 placeholder:text-sm pl-2 dark:bg-darkColor1"
+              className="bg-lightColor2 rounded w-full outline-none outline-offset-0 focus:outline-1 focus:outline-blueColor1 px-2 py-2 dark:bg-darkColor1"
               type="text"
             />
           </div>
           <button
             onClick={handleClickSubmit}
-            className="bg-lightColor2 hover:bg-lightColor1 border-1 px-1 border-green-500 rounded dark:bg-darkColor1 dark:hover:bg-darkColor2"
+            className=" border-1 px-4 py-2 border-green-500 rounded bg-blueColor1 hover:bg-blueColor2"
           >
-            Go
+            <SendIcon />
           </button>
         </div>
       </div>

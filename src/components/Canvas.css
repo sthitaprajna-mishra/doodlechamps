@@ -1,0 +1,25 @@
+.canvas-size {
+  width: 750px; /* Default width for all screens */
+  height: 500px; /* Default height for all screens */
+}
+
+/* @media (min-width: 1024px) {
+  .canvas-size {
+    width: 500px; 
+    height: 350px; 
+  }
+} */
+
+/* @media (min-width: 1280px) {
+  .canvas-size {
+    width: 750px; 
+    height: 500px; 
+  }
+} */
+
+@media (min-width: 1281px) {
+  .canvas-size {
+    width: 1180px; /* Default width for all screens */
+    height: 750px; /* Default height for all screens */
+  }
+}
