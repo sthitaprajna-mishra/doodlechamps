@@ -1,5 +1,5 @@
 // react
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 
 // clipboard
 import clipboard from "clipboard-copy";
@@ -19,6 +19,8 @@ import ConfigurationSection from "./ConfigurationSection";
 import Canvas from "./Canvas";
 
 const CreatePage = ({ roomCode, ownerName, joineeName }) => {
+  const chatContainerRef = useRef(null);
+
   const { userList, setUserList } = useContext(UserContext);
   const [displayUsers, setDisplayUsers] = useState([]);
   const [notifs, setNotifs] = useState([]);
@@ -103,6 +105,12 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
             notifData: `${joineeName} has joined the room`,
           },
         ]);
+
+        // Scroll to the end of the chat container
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop =
+            chatContainerRef.current.scrollHeight;
+        }
       }
     });
 
@@ -124,6 +132,12 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
           console.log(prev);
           return prev.filter((u) => u.userId !== userId);
         });
+
+        // Scroll to the end of the chat container
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop =
+            chatContainerRef.current.scrollHeight;
+        }
       }
     });
 
@@ -149,6 +163,12 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
             },
           },
         ]);
+
+        // Scroll to the end of the chat container
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop =
+            chatContainerRef.current.scrollHeight + 12;
+        }
       }
     });
 
@@ -188,7 +208,7 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
         <div className="bg-lightColor2 h-fit w-full mx-4 py-2 text-center dark:bg-darkColor1">
           <h1 className="text-4xl">Users</h1>
         </div>
-        <Box className="flex space-x-8 h-fit w-fit py-2 px-4 mt-8  rounded-md bg-lightColor2 dark:bg-darkColor1">
+        <Box className="flex  space-x-8 h-fit w-fit py-2 px-4 mt-8  rounded-md bg-lightColor2 dark:bg-darkColor1">
           <div>Room Code </div>
           <div className="flex space-x-2">
             <div className="text-blueColor1">{roomCode}</div>
@@ -200,7 +220,11 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
             </div>
           </div>
         </Box>
-        <div className="mt-8 w-full">
+
+        {copied ? (
+          <div className="text-blueColor1 mt-2 text-sm">Copied!</div>
+        ) : null}
+        <div className="mt-8 text-center w-full">
           {/* {sampleList.map((user) => {
             return (
               <div className="bg-lightColor2 dark:bg-darkColor1 mb-2 py-1 pl-2">
@@ -241,7 +265,10 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
 
       {/* Right Side - Chatbox */}
       <div className="bg-lightColor1 col-span-12 pt-4 pb-2 flex flex-col rounded-md md:col-span-8 dark:bg-darkColor2">
-        <div className="border-1 flex-1">
+        <div
+          ref={chatContainerRef}
+          className="flex-1 pb-6 max-h-[25rem] overflow-auto "
+        >
           {notifs.map((notif) => {
             switch (notif.notifType) {
               case "joined":
@@ -249,14 +276,14 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
                 return (
                   <div
                     key={notif.notifId}
-                    className="text-blueColor1 mb-2 py-1 px-4"
+                    className="text-blueColor1 pb-2 px-4"
                   >
                     <h2>{notif.notifData}</h2>
                   </div>
                 );
               case "message":
                 return (
-                  <div key={notif.notifId} className="mb-2 py-1 px-4">
+                  <div key={notif.notifId} className="pb-2 px-4">
                     <h2>
                       <span className="text-blueColor1">
                         {notif.notifData.senderName}:
@@ -268,18 +295,9 @@ const CreatePage = ({ roomCode, ownerName, joineeName }) => {
               default:
                 console.log("INVALID NOTIF TYPE");
             }
-
-            return (
-              <div
-                key={notif.notifId}
-                className="text-blueColor1 mb-2 py-1 px-4"
-              >
-                <h2>{notif.notifData}</h2>
-              </div>
-            );
           })}
         </div>
-        <div className="flex space-x-4 px-4">
+        <div className="flex mt-4 space-x-4 px-4">
           <div className="w-full border-1 border-red-600">
             <input
               value={textMessage}
