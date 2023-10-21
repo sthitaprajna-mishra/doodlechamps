@@ -21,6 +21,7 @@ const CreateJoinRoom = () => {
 
   const createRoom = () => {
     if (usernameValidation) {
+      setUsername((prev) => prev.trim());
       socket.emit("createRoom", username);
     } else {
       setUsernameValidation(false);
@@ -29,6 +30,7 @@ const CreateJoinRoom = () => {
 
   const joinRoom = () => {
     if (roomcodeValidation) {
+      setUsername((prev) => prev.trim());
       socket.emit("joinRoom", username, roomcodeinput);
     } else {
       setRoomcodeValidation(false);
@@ -46,7 +48,7 @@ const CreateJoinRoom = () => {
   };
 
   const handleUserName = (e) => {
-    setUsername(e.target.value.trim());
+    setUsername(e.target.value);
     if (e.target.value.trim() !== "") {
       setUsernameValidation(true);
     } else {
