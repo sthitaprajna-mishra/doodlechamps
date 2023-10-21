@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <div className="flex items-center justify-center bg-lightColor1  py-4 dark:bg-darkColor1">
-      <div className="text-6xl text-blueColor1 font-semibold">quickchat</div>
+      <div className="text-6xl text-blueColor1 font-semibold">QuickChat</div>
     </div>
   );
 
