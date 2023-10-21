@@ -34,7 +34,7 @@ Users will be able to -
 ### Screenshots -
 
 Below are some screenshots captured while using the live-deployed app.
-As a bonus treat for "The Office" fans, there is a delightful reimagination of how beloved characters from 'The Office' would have interacted within this virtual chatroom.
+As a bonus treat for "The Office" fans, there is a delightful reimagination of how beloved characters from the show would have interacted within this virtual chatroom.
 
 #### Landing Page
 
