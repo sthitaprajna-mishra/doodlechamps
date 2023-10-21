@@ -12,7 +12,7 @@ export function useSocket() {
 
 // Socket provider component
 export function SocketProvider({ children }) {
-  const socket = io.connect("http://localhost:3000", {
+  const socket = io.connect("https://quickchatserver.onrender.com/", {
     transports: ["websocket"],
   });
 
