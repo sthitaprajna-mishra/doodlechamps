@@ -8,8 +8,10 @@ export default {
     },
     extend: {
       backgroundImage: {
-        bgDesktopDark: "url('./src/assets/bgDark.jpg')",
-        bgDesktopLight: "url('./src/assets/bgLight.jpg')",
+        bgDesktopDark:
+          "url('https://raw.githubusercontent.com/sthitaprajna-mishra/quickchat/main/src/assets/bgDark.jpg')",
+        bgDesktopLight:
+          "url('https://raw.githubusercontent.com/sthitaprajna-mishra/quickchat/main/src/assets/bgLight.jpg')",
       },
       colors: {
         darkColor1: "hsl(222, 40%, 13%)",
