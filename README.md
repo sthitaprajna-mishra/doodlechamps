@@ -69,7 +69,7 @@ As a bonus treat for "The Office" fans, there is a delightful reimagination of h
 
 - Add an ability to incorporate emoticons and GIFs in conversations. This will infuse life and expressiveness into every exchange, making interactions more engaging and entertaining.
 
-- At present, our app doesn't utilize a traditional database to store conversations. This aligns with the core concept of the application, which prioritizes short and spontaneous interactions over comprehensive, long-term chat histories. However, to effectively manage scalability and accommodate increasing demand, it is possible to explore some real-time data storage solutions that can enhance the app's performance while still preserving its unique focus on quick and dynamic conversations.
+- At present, this app doesn't utilize a traditional database to store conversations. This aligns with the core concept of the application, which prioritizes short and spontaneous interactions over comprehensive, long-term chat histories. However, to effectively manage scalability and accommodate increasing demand, it is possible to explore some real-time data storage solutions that can enhance the app's performance while still preserving its unique focus on quick and dynamic conversations.
 
 ## Author
 
