@@ -4,7 +4,7 @@ Welcome to our web-based platform that empowers users to effortlessly create pri
 
 ## Server Repo and Live Site URL
 
-This repository holds the frontend code only. For the server side code, visit [here](https://github.com/sthitaprajna-mishra/quickchatserver).
+This repository holds the frontend code only. For the **server side code**, visit [here](https://github.com/sthitaprajna-mishra/quickchatserver).
 
 [Click here](https://aquickchat.netlify.app) to visit the live site deployed on Netlify.
 
